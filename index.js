@@ -35,7 +35,7 @@ app.post("/posts", async (req, res) => {
     const response = await axios.post(
       "https://api.openai.com/v1/completions",
       {
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo-0613",
         prompt: `Translate the following text to emojis: ${text}`,
         max_tokens: 50,
       },
