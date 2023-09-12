@@ -3,6 +3,8 @@ const sqlite3 = require("sqlite3").verbose();
 const axios = require("axios");
 const cors = require("cors");
 
+require("dotenv").config();
+
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -31,11 +33,12 @@ app.post("/posts", async (req, res) => {
   const { username, text } = req.body;
 
   const openaiApiKey = process.env.OPEN_API_KEY;
+
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/completions",
       {
-        model: "gpt-3.5-turbo-0613",
+        model: "text-davinci-003",
         prompt: `Translate the following text to emojis: ${text}`,
         max_tokens: 50,
       },
@@ -61,7 +64,6 @@ app.post("/posts", async (req, res) => {
       });
   } catch (error) {
     console.error("Error translating text to emojis:", error);
-    console.error("Error translating text to emojis:", error.data.error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
